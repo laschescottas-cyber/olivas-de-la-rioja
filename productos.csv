@@ -1,0 +1,28 @@
+Categoria,Producto,Presentacion,Precio,Imagen
+Aceites,Aceite de Oliva,PET 500cc,$13.500,img/aceite_pet.jpg
+Aceites,Aceite de Oliva,Vidrio 500cc,$14.600,img/aceite_vidrio.jpg
+Aceites,Aceite de Oliva,1 Litro,$22.900,img/aceite_1l.jpg
+Aceites,Aceite de Oliva,2 Litros,$40.900,img/aceite_2l.jpg
+Aceitunas,Aceituna Verde 00 (Arauco),500grs,$8.900,img/aceituna_verde_500.jpg
+Aceitunas,Aceituna Verde 00 (Arauco),1kg,$16.900,img/aceituna_verde_1kg.jpg
+Aceitunas,Aceituna Negra 00 (Arauco),1kg,$21.000,img/aceituna_negra_1kg.jpg
+Aceitunas,Aceituna Rellena Mixta,Frasco 330grs,$7.900,img/aceituna_mixta.jpg
+Aceitunas,Pasta de aceitunas (V/N),Frasco 330grs,$6.900,img/pasta_aceitunas.jpg
+Frutos Secos,Pistacho tostado con c scara,1/4 kg,$13.500,img/pistacho_tostado_250.jpg
+Frutos Secos,Pistacho tostado con c scara,1/2 kg,$22.500,img/pistacho_tostado_500.jpg
+Frutos Secos,Pistacho tostado con c scara,1kg,$40.500,img/pistacho_tostado_1kg.jpg
+Frutos Secos,Pistacho pelado natural,1kg,$68.000,img/pistacho_pelado.jpg
+Frutos Secos,Nuez pelada mariposa (Chandler),1/2kg,$14.000,img/nuez_mariposa_500.jpg
+Frutos Secos,Nuez pelada mariposa (Chandler),1kg,$24.000,img/nuez_mariposa_1kg.jpg
+Frutos Secos,Ciruelas pasas descarozadas,1/2 kg,$7.000,img/ciruelas_500.jpg
+Frutos Secos,Ciruelas pasas descarozadas,1kg,$12.000,img/ciruelas_1kg.jpg
+Frutos Secos,Pasas de uva,1/2kg,$4.800,img/pasas_500.jpg
+Frutos Secos,Pasas de uva,1kg,$8.500,img/pasas_1kg.jpg
+Dulces y Varios,Nueces confitadas,Caja 10u,$10.000,img/nueces_confitadas.jpg
+Dulces y Varios,Dulce de cayote,Frasco 330cc,$7.700,img/dulce_cayote.jpg
+Dulces y Varios,Dulce de membrillo (Pan),650grs,$7.000,img/dulce_membrillo_650.jpg
+Dulces y Varios,Dulce de membrillo (Pan),270grs,$3.500,img/dulce_membrillo_270.jpg
+Dulces y Varios,Tomates disecados premium,100grs,$3.500,img/tomates_100.jpg
+Dulces y Varios,Tomates disecados premium,1kg,$27.000,img/tomates_1kg.jpg
+Vinos,Tilimuqui Malbec Orgánico,750cc,$9.900,img/tilimuqui_malbec.jpg
+Vinos,Club de Playa Blanco dulce,750cc,$6.900,img/club_playa_blanco.jpg

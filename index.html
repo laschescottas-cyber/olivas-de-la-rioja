@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Olivas de La Rioja</title>
+    <style>
+        :root { --oro: #C5A059; --oscuro: #1A1A1A; --fondo-card: #222; }
+        body { background: var(--oscuro); color: #F5F5DC; font-family: 'Georgia', serif; margin: 0; padding: 0; }
+
+        /* BANNER */
+        header { height: 400px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('img/banner.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; border-bottom: 5px solid var(--oro); }
+        header h1 { color: var(--oro); font-size: 4.5em; text-transform: uppercase; letter-spacing: 3px; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+
+        /* TEXTO DE PRESENTACION DEBAJO DEL TITULO */
+        .presentacion-marca { max-width: 780px; margin: 18px 25px 0; color: #F5F5DC; font-size: 1.08em; line-height: 1.55; text-shadow: 1px 2px 5px rgba(0,0,0,0.95); }
+        .presentacion-marca strong { display: block; color: var(--oro); font-size: 1.35em; margin-bottom: 5px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: auto; }
+        .card { border: 1px solid var(--oro); background: var(--fondo-card); padding: 20px; text-align: center; border-radius: 4px; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: #F5F5DC; }
+        .card img { width: 100%; height: 280px; object-fit: cover; border: 1px solid var(--oro); margin-bottom: 20px; }
+
+        /* CARRITO MAS COMPACTO */
+        .carrito { position: fixed; top: 12px; right: 12px; background: var(--oro); color: black; padding: 11px; border-radius: 8px; width: 240px; max-height: 68vh; overflow-y: auto; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); box-sizing: border-box; }
+        .carrito h3 { margin: 2px 0 9px; font-size: 1.05em; }
+        .carrito ul { list-style: none; padding: 0; margin: 0; }
+        .carrito li { display: flex; justify-content: space-between; align-items: center; gap: 7px; background: rgba(255,255,255,0.2); margin-bottom: 5px; padding: 6px 7px; border-radius: 4px; font-size: 0.78em; line-height: 1.25; }
+        .carrito .nombre-item { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+        #total-carrito { font-weight: bold; margin-top: 8px; font-size: 0.9em; }
+        .carrito > button { padding: 8px; font-size: 0.78em; margin-top: 8px; }
+
+        /* CESTO AL LADO DEL PRODUCTO ELEGIDO */
+        .btn-eliminar { flex: 0 0 26px; cursor: pointer; color: #6D1111; background: rgba(255,255,255,0.35); border: 1px solid #6D1111; border-radius: 5px; width: 26px; height: 26px; padding: 0; margin: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; }
+        .btn-eliminar:hover { background: #6D1111; color: white; }
+
+        button { background: #2D4837; color: white; border: 1px solid #fff; padding: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        h2 { color: var(--oro); text-align: center; margin-top: 60px; }
+        .desc-cat { text-align: center; color: #ccc; font-style: italic; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        footer { padding: 40px; text-align: center; border-top: 1px solid #444; background: #111; color: #ccc; }
+        footer a { color: var(--oro); text-decoration: none; font-weight: bold; }
+
+        @media (max-width: 700px) {
+            header h1 { font-size: 2.35em; }
+            .presentacion-marca { font-size: 0.92em; margin-left: 18px; margin-right: 18px; }
+            .carrito { width: 210px; top: 8px; right: 8px; max-height: 55vh; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Olivas de La Rioja</h1>
+        <div class="presentacion-marca">
+            <strong>El sabor de La Rioja en tu mesa</strong>
+            Soy Jos&eacute; y te traigo lo mejor de mi tierra. Aceites de oliva, aceitunas, frutos secos seleccionados y dulces artesanales. Todo cosechado en el coraz&oacute;n de La Rioja, con la calidad y el cari&ntilde;o de lo hecho en casa. Sabores que te hacen acordar a lo de la abuela.
+        </div>
+    </header>
+    <div class="carrito">
+        <h3>Tu Carrito</h3>
+        <ul id="lista-carrito"></ul>
+        <div id="total-carrito">Total: </div>
+        <button onclick="enviarWhatsApp()">FINALIZAR PEDIDO</button>
+    </div>
+    <div id="catalogo"><h2>Aceites</h2><p class='desc-cat'>La esencia de nuestra tierra. Aceites de oliva prensados con la tradici&oacute;n y el sol de La Rioja.</p><img src='img/aceites.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
+                <img src='img/aceite_pet.jpg'>
+                <h3>Aceite de Oliva</h3>
+                <p>PET 500cc</p>
+                <p><strong>$13.500</strong></p>
+                <button onclick="agregarAlCarrito('Aceite de Oliva', 'PET 500cc', '$13.500')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/aceite_vidrio.jpg'>
+                <h3>Aceite de Oliva</h3>
+                <p>Vidrio 500cc</p>
+                <p><strong>$14.600</strong></p>
+                <button onclick="agregarAlCarrito('Aceite de Oliva', 'Vidrio 500cc', '$14.600')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/aceite_1l.jpg'>
+                <h3>Aceite de Oliva</h3>
+                <p>1 Litro</p>
+                <p><strong>$22.900</strong></p>
+                <button onclick="agregarAlCarrito('Aceite de Oliva', '1 Litro', '$22.900')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/aceite_2l.jpg'>
+                <h3>Aceite de Oliva</h3>
+                <p>2 Litros</p>
+                <p><strong>$40.900</strong></p>
+                <button onclick="agregarAlCarrito('Aceite de Oliva', '2 Litros', '$40.900')">Agregar</button>
+            </div></div><h2>Aceitunas</h2><p class='desc-cat'>Nuestra Variedad Arauco es, por definici&oacute;n, el emblema de la olivicultura riojana.</p><img src='img/aceitunas.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
+                <img src='img/aceituna_verde_500.jpg'>
+                <h3>Aceituna Verde 00 (Arauco)</h3>
+                <p>500grs</p>
+                <p><strong>$8.900</strong></p>
+                <button onclick="agregarAlCarrito('Aceituna Verde 00 (Arauco)', '500grs', '$8.900')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/aceituna_verde_1kg.jpg'>
+                <h3>Aceituna Verde 00 (Arauco)</h3>
+                <p>1kg</p>
+                <p><strong>$16.900</strong></p>
+                <button onclick="agregarAlCarrito('Aceituna Verde 00 (Arauco)', '1kg', '$16.900')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/aceituna_negra_1kg.jpg'>
+                <h3>Aceituna Negra 00 (Arauco)</h3>
+                <p>1kg</p>
+                <p><strong>$21.000</strong></p>
+                <button onclick="agregarAlCarrito('Aceituna Negra 00 (Arauco)', '1kg', '$21.000')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/aceituna_mixta.jpg'>
+                <h3>Aceituna Rellena Mixta</h3>
+                <p>Frasco 330grs</p>
+                <p><strong>$7.900</strong></p>
+                <button onclick="agregarAlCarrito('Aceituna Rellena Mixta', 'Frasco 330grs', '$7.900')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/pasta_aceitunas.jpg'>
+                <h3>Pasta de aceitunas (V/N)</h3>
+                <p>Frasco 330grs</p>
+                <p><strong>$6.900</strong></p>
+                <button onclick="agregarAlCarrito('Pasta de aceitunas (V/N)', 'Frasco 330grs', '$6.900')">Agregar</button>
+            </div></div><h2>Frutos Secos</h2><p class='desc-cat'>Selecci&oacute;n de frutos secos de alta calidad, cosechados en el coraz&oacute;n de nuestra provincia.</p><img src='img/frutos_secos.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
+                <img src='img/pistacho_tostado_250.jpg'>
+                <h3>Pistacho tostado con cáscara</h3>
+                <p>1/4 kg</p>
+                <p><strong>$13.500</strong></p>
+                <button onclick="agregarAlCarrito('Pistacho tostado con cáscara', '1/4 kg', '$13.500')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/pistacho_tostado_500.jpg'>
+                <h3>Pistacho tostado con cáscara</h3>
+                <p>1/2 kg</p>
+                <p><strong>$22.500</strong></p>
+                <button onclick="agregarAlCarrito('Pistacho tostado con cáscara', '1/2 kg', '$22.500')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/pistacho_tostado_1kg.jpg'>
+                <h3>Pistacho tostado con cáscara</h3>
+                <p>1kg</p>
+                <p><strong>$40.500</strong></p>
+                <button onclick="agregarAlCarrito('Pistacho tostado con cáscara', '1kg', '$40.500')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/pistacho_pelado.jpg'>
+                <h3>Pistacho pelado natural</h3>
+                <p>1kg</p>
+                <p><strong>$68.000</strong></p>
+                <button onclick="agregarAlCarrito('Pistacho pelado natural', '1kg', '$68.000')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/nuez_mariposa_500.jpg'>
+                <h3>Nuez pelada mariposa (Chandler)</h3>
+                <p>1/2kg</p>
+                <p><strong>$14.000</strong></p>
+                <button onclick="agregarAlCarrito('Nuez pelada mariposa (Chandler)', '1/2kg', '$14.000')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/nuez_mariposa_1kg.jpg'>
+                <h3>Nuez pelada mariposa (Chandler)</h3>
+                <p>1kg</p>
+                <p><strong>$24.000</strong></p>
+                <button onclick="agregarAlCarrito('Nuez pelada mariposa (Chandler)', '1kg', '$24.000')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/ciruelas_500.jpg'>
+                <h3>Ciruelas pasas descarozadas</h3>
+                <p>1/2 kg</p>
+                <p><strong>$7.000</strong></p>
+                <button onclick="agregarAlCarrito('Ciruelas pasas descarozadas', '1/2 kg', '$7.000')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/ciruelas_1kg.jpg'>
+                <h3>Ciruelas pasas descarozadas</h3>
+                <p>1kg</p>
+                <p><strong>$12.000</strong></p>
+                <button onclick="agregarAlCarrito('Ciruelas pasas descarozadas', '1kg', '$12.000')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/pasas_500.jpg'>
+                <h3>Pasas de uva</h3>
+                <p>1/2kg</p>
+                <p><strong>$4.800</strong></p>
+                <button onclick="agregarAlCarrito('Pasas de uva', '1/2kg', '$4.800')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/pasas_1kg.jpg'>
+                <h3>Pasas de uva</h3>
+                <p>1kg</p>
+                <p><strong>$8.500</strong></p>
+                <button onclick="agregarAlCarrito('Pasas de uva', '1kg', '$8.500')">Agregar</button>
+            </div></div><h2>Dulces y Varios</h2><p class='desc-cat'>Sabores regionales artesanales que evocan los mejores recuerdos de nuestra cultura riojana.</p><img src='img/dulces.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
+                <img src='img/nueces_confitadas.jpg'>
+                <h3>Nueces confitadas</h3>
+                <p>Caja 10u</p>
+                <p><strong>$10.000</strong></p>
+                <button onclick="agregarAlCarrito('Nueces confitadas', 'Caja 10u', '$10.000')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/dulce_cayote.jpg'>
+                <h3>Dulce de cayote</h3>
+                <p>Frasco 330cc</p>
+                <p><strong>$7.700</strong></p>
+                <button onclick="agregarAlCarrito('Dulce de cayote', 'Frasco 330cc', '$7.700')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/dulce_membrillo_650.jpg'>
+                <h3>Dulce de membrillo (Pan)</h3>
+                <p>650grs</p>
+                <p><strong>$7.000</strong></p>
+                <button onclick="agregarAlCarrito('Dulce de membrillo (Pan)', '650grs', '$7.000')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/dulce_membrillo_270.jpg'>
+                <h3>Dulce de membrillo (Pan)</h3>
+                <p>270grs</p>
+                <p><strong>$3.500</strong></p>
+                <button onclick="agregarAlCarrito('Dulce de membrillo (Pan)', '270grs', '$3.500')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/tomates_100.jpg'>
+                <h3>Tomates disecados premium</h3>
+                <p>100grs</p>
+                <p><strong>$3.500</strong></p>
+                <button onclick="agregarAlCarrito('Tomates disecados premium', '100grs', '$3.500')">Agregar</button>
+            </div>            <div class="card">
+                <img src='img/tomates_1kg.jpg'>
+                <h3>Tomates disecados premium</h3>
+                <p>1kg</p>
+                <p><strong>$27.000</strong></p>
+                <button onclick="agregarAlCarrito('Tomates disecados premium', '1kg', '$27.000')">Agregar</button>
+            </div></div>    </div>
+    <footer>
+        <p>Realiza tu pedido con Jose v&iacute;a <a href='https://wa.me/5493804559043' target='_blank'>WhatsApp</a></p>
+        <p>Seguinos en Instagram: <a href='https://www.instagram.com/olivas_de_larioja' target='_blank'>@olivasdelarioja</a></p>
+    </footer>
+    <script>
+        let carrito = [];
+        let contador = 0;
+        function agregarAlCarrito(prod, pres, precioTxt) {
+            let precioNum = parseInt(precioTxt.replace('$', '').replace(/\./g, ''));
+            carrito.push({id: contador++, nombre: prod + ' (' + pres + ')', precioTxt: precioTxt, precioNum: precioNum});
+            actualizar();
+        }
+        function eliminar(id) {
+            carrito = carrito.filter(i => i.id !== id);
+            actualizar();
+        }
+        function actualizar() {
+            let lista = document.getElementById('lista-carrito');
+            lista.innerHTML = '';
+            let total = 0;
+            carrito.forEach(item => {
+                total += item.precioNum;
+                lista.innerHTML += '<li><span class="nombre-item">' + item.nombre + ' - ' + item.precioTxt +
+                '</span><button class="btn-eliminar" title="Quitar producto" aria-label="Quitar producto" onclick="eliminar(' + item.id + ')">&#128465;</button></li>';
+            });
+            document.getElementById('total-carrito').innerText = 'Total: $' + total.toLocaleString('es-AR');
+        }
+        function enviarWhatsApp() {
+            let msg = "Hola Jose, quiero hacer el siguiente pedido:%0A%0A" +
+                      carrito.map(i => "- " + i.nombre).join("%0A") +
+                      "%0A%0A*TOTAL: $" + document.getElementById('total-carrito').innerText.split('$')[1] + "*";
+            window.open('https://wa.me/5493804559043?text=' + msg, '_blank');
+        }
+    </script>
+</body>
+</html>

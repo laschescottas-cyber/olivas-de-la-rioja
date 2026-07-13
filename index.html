@@ -124,7 +124,7 @@
     </div>
 
     <footer>
-        <p>Realiz&aacute; tu pedido con Jose v&iacute;a <a href="https://wa.me/5493804559043" target="_blank">WhatsApp</a></p>
+        <p>Realizá tu pedido con José vía <a href="https://wa.me/5493804559043" target="_blank">WhatsApp</a></p>
         <p>Seguinos en Instagram: <a href="https://www.instagram.com/olivas_de_larioja" target="_blank">@olivas_de_larioja</a></p>
     </footer>
 
@@ -392,7 +392,7 @@
             const tipoPedido = modoRevendedor ? 'PEDIDO DE REVENDEDOR (' + DESCUENTO_REVENDEDOR + '% OFF)' : 'PEDIDO';
             const detalle = carrito.map(i => '- ' + i.nombre + ' - ' + i.precioTxt).join('%0A');
             const total = document.getElementById('total-carrito').innerText.split('$')[1] || '0';
-            const msg = 'Hola Jose, quiero hacer un ' + tipoPedido + ':%0A%0A' + detalle + '%0A%0A*TOTAL: $' + total + '*';
+            const msg = 'Hola José, quiero hacer un ' + tipoPedido + ':%0A%0A' + detalle + '%0A%0A*TOTAL: $' + total + '*';
             window.open('https://wa.me/5493804559043?text=' + msg, '_blank');
         }
 

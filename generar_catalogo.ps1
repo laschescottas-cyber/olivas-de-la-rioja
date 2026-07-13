@@ -99,7 +99,7 @@ foreach ($cat in ($productos | Select-Object -ExpandProperty Categoria -Unique))
 $html += @"
     </div>
     <footer>
-        <p>Realiza tu pedido con Jose v&iacute;a <a href='https://wa.me/5493804559043' target='_blank'>WhatsApp</a></p>
+        <p>Realizá tu pedido con José v&iacute;a <a href='https://wa.me/5493804559043' target='_blank'>WhatsApp</a></p>
         <p>Seguinos en Instagram: <a href='https://www.instagram.com/olivasdelarioja' target='_blank'>@olivasdelarioja</a></p>
     </footer>
     <script>
@@ -126,7 +126,7 @@ $html += @"
             document.getElementById('total-carrito').innerText = 'Total: $' + total.toLocaleString('es-AR');
         }
         function enviarWhatsApp() {
-            let msg = "Hola Jose, quiero hacer el siguiente pedido:%0A%0A" +
+            let msg = "Hola José, quiero hacer el siguiente pedido:%0A%0A" +
                       carrito.map(i => "- " + i.nombre).join("%0A") +
                       "%0A%0A*TOTAL: $" + document.getElementById('total-carrito').innerText.split('$')[1] + "*";
             window.open('https://wa.me/5493804559043?text=' + msg, '_blank');

@@ -1,27 +1,48 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Olivas de La Rioja</title>
     <style>
-        :root { --oro: #C5A059; --oscuro: #1A1A1A; --fondo-card: #222; }
-        body { background: var(--oscuro); color: #F5F5DC; font-family: 'Georgia', serif; margin: 0; padding: 0; }
+        :root { --oro: #C5A059; --oscuro: #1A1A1A; --fondo-card: #222; --verde: #2D4837; }
+        * { box-sizing: border-box; }
+        body { background: var(--oscuro); color: #F5F5DC; font-family: Georgia, serif; margin: 0; padding: 0; }
 
-        /* BANNER */
-        header { height: 400px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('img/banner.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; border-bottom: 5px solid var(--oro); }
+        header {
+            min-height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('img/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            border-bottom: 5px solid var(--oro);
+            padding: 95px 20px 55px;
+        }
         header h1 { color: var(--oro); font-size: 4.5em; text-transform: uppercase; letter-spacing: 3px; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
-
-        /* TEXTO DE PRESENTACION DEBAJO DEL TITULO */
         .presentacion-marca { max-width: 780px; margin: 18px 25px 0; color: #F5F5DC; font-size: 1.08em; line-height: 1.55; text-shadow: 1px 2px 5px rgba(0,0,0,0.95); }
         .presentacion-marca strong { display: block; color: var(--oro); font-size: 1.35em; margin-bottom: 5px; }
+
+        .barra-superior { position: fixed; top: 12px; left: 12px; z-index: 1001; display: flex; gap: 8px; align-items: center; max-width: calc(100vw - 285px); }
+        .btn-modo { display: inline-flex; align-items: center; justify-content: center; width: auto; margin: 0; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--oro); background: rgba(17,17,17,0.92); color: var(--oro); font-family: Arial, sans-serif; font-weight: bold; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.45); cursor: pointer; }
+        .btn-modo:hover { background: var(--oro); color: #111; }
+        .btn-salir { display: none; }
+        body.modo-revendedor .btn-salir { display: inline-flex; }
+        body.modo-revendedor .btn-acceso { display: none; }
+
+        .etiqueta-revendedor { display: none; color: white; background: var(--verde); border: 1px solid var(--oro); padding: 8px 14px; border-radius: 20px; font-family: Arial, sans-serif; font-weight: bold; margin-top: 16px; }
+        body.modo-revendedor .etiqueta-revendedor { display: inline-block; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: auto; }
         .card { border: 1px solid var(--oro); background: var(--fondo-card); padding: 20px; text-align: center; border-radius: 4px; transition: 0.3s; }
         .card:hover { transform: translateY(-5px); border-color: #F5F5DC; }
         .card img { width: 100%; height: 280px; object-fit: cover; border: 1px solid var(--oro); margin-bottom: 20px; }
 
-        /* CARRITO MAS COMPACTO */
-        .carrito { position: fixed; top: 12px; right: 12px; background: var(--oro); color: black; padding: 11px; border-radius: 8px; width: 240px; max-height: 68vh; overflow-y: auto; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); box-sizing: border-box; }
+        .carrito { position: fixed; top: 12px; right: 12px; background: var(--oro); color: black; padding: 11px; border-radius: 8px; width: 240px; max-height: 68vh; overflow-y: auto; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .carrito h3 { margin: 2px 0 9px; font-size: 1.05em; }
         .carrito ul { list-style: none; padding: 0; margin: 0; }
         .carrito li { display: flex; justify-content: space-between; align-items: center; gap: 7px; background: rgba(255,255,255,0.2); margin-bottom: 5px; padding: 6px 7px; border-radius: 4px; font-size: 0.78em; line-height: 1.25; }
@@ -29,233 +50,360 @@
         #total-carrito { font-weight: bold; margin-top: 8px; font-size: 0.9em; }
         .carrito > button { padding: 8px; font-size: 0.78em; margin-top: 8px; }
 
-        /* CESTO AL LADO DEL PRODUCTO ELEGIDO */
         .btn-eliminar { flex: 0 0 26px; cursor: pointer; color: #6D1111; background: rgba(255,255,255,0.35); border: 1px solid #6D1111; border-radius: 5px; width: 26px; height: 26px; padding: 0; margin: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; }
         .btn-eliminar:hover { background: #6D1111; color: white; }
 
-        button { background: #2D4837; color: white; border: 1px solid #fff; padding: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
+        button { background: var(--verde); color: white; border: 1px solid #fff; padding: 10px; cursor: pointer; width: 100%; margin-top: 10px; }
         h2 { color: var(--oro); text-align: center; margin-top: 60px; }
-        .desc-cat { text-align: center; color: #ccc; font-style: italic; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .desc-cat { text-align: center; color: #ccc; font-style: italic; margin-bottom: 20px; max-width: 800px; margin-left: auto; margin-right: auto; padding: 0 18px; }
+        .imagen-categoria { width: 100%; max-width: 800px; display: block; margin: auto; margin-bottom: 30px; border: 1px solid var(--oro); }
         footer { padding: 40px; text-align: center; border-top: 1px solid #444; background: #111; color: #ccc; }
         footer a { color: var(--oro); text-decoration: none; font-weight: bold; }
 
+        #acceso { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(17,17,17,0.96); z-index: 9999; }
+        #acceso.visible { display: flex; }
+        .login { width: min(390px, 100%); padding: 30px; background: #222; border: 1px solid var(--oro); border-radius: 10px; text-align: center; box-shadow: 0 10px 35px rgba(0,0,0,.6); }
+        .login h2 { margin: 0 0 10px; }
+        .login input { width: 100%; padding: 12px; margin-top: 14px; border: 1px solid var(--oro); border-radius: 5px; font-size: 1rem; }
+        .login .btn-cancelar { background: #444; }
+        #error-clave { min-height: 20px; color: #ff9c9c; font-family: Arial, sans-serif; }
+
+        .precio-anterior { display: none; color: #aaa; text-decoration: line-through; margin-right: 8px; font-size: .9em; }
+        .precio-revendedor { display: none; color: var(--oro); font-size: 1.15em; }
+        body.modo-revendedor .precio-anterior,
+        body.modo-revendedor .precio-revendedor { display: inline; }
+        body.modo-revendedor .precio-normal { display: none; }
+        .estado-carga { text-align: center; color: #F5F5DC; padding: 45px 20px; font-family: Arial, sans-serif; }
+
         @media (max-width: 700px) {
+            header { padding-top: 130px; }
             header h1 { font-size: 2.35em; }
             .presentacion-marca { font-size: 0.92em; margin-left: 18px; margin-right: 18px; }
+            .barra-superior { top: 8px; left: 8px; max-width: calc(100vw - 230px); flex-direction: column; align-items: flex-start; }
+            .btn-modo { padding: 8px 10px; font-size: 0.78em; }
             .carrito { width: 210px; top: 8px; right: 8px; max-height: 55vh; }
+            .grid { grid-template-columns: 1fr; padding: 25px 16px; gap: 25px; }
         }
     </style>
 </head>
 <body>
+    <div class="barra-superior">
+        <button class="btn-modo btn-acceso" type="button" onclick="mostrarAcceso()">Acceso revendedores</button>
+        <button class="btn-modo btn-salir" type="button" onclick="salirRevendedor()">Volver a compra normal</button>
+    </div>
+
+    <div id="acceso" aria-hidden="true">
+        <form class="login" onsubmit="validarClave(event)">
+            <h2>Acceso para revendedores</h2>
+            <p>Ingresá la contraseña para consultar precios especiales.</p>
+            <input id="clave" type="password" placeholder="Contraseña" autocomplete="current-password" required>
+            <button type="submit">INGRESAR</button>
+            <button class="btn-cancelar" type="button" onclick="ocultarAcceso()">Cancelar</button>
+            <p id="error-clave" aria-live="polite"></p>
+        </form>
+    </div>
+
     <header>
         <h1>Olivas de La Rioja</h1>
+        <div class="etiqueta-revendedor" id="etiqueta-descuento">CATÁLOGO PARA REVENDEDORES · 15% OFF</div>
         <div class="presentacion-marca">
             <strong>El sabor de La Rioja en tu mesa</strong>
             Soy Jos&eacute; y te traigo lo mejor de mi tierra. Aceites de oliva, aceitunas, frutos secos seleccionados y dulces artesanales. Todo cosechado en el coraz&oacute;n de La Rioja, con la calidad y el cari&ntilde;o de lo hecho en casa. Sabores que te hacen acordar a lo de la abuela.
         </div>
     </header>
+
     <div class="carrito">
-        <h3>Tu Carrito</h3>
+        <h3 id="titulo-carrito">Mi Pedido</h3>
         <ul id="lista-carrito"></ul>
-        <div id="total-carrito">Total: </div>
+        <div id="total-carrito">Total: $0</div>
         <button onclick="enviarWhatsApp()">FINALIZAR PEDIDO</button>
     </div>
-    <div id="catalogo"><h2>Aceites</h2><p class='desc-cat'>La esencia de nuestra tierra. Aceites de oliva prensados con la tradici&oacute;n y el sol de La Rioja.</p><img src='img/aceites.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
-                <img src='img/aceite_pet.jpg'>
-                <h3>Aceite de Oliva</h3>
-                <p>PET 500cc</p>
-                <p><strong>$13.500</strong></p>
-                <button onclick="agregarAlCarrito('Aceite de Oliva', 'PET 500cc', '$13.500')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/aceite_vidrio.jpg'>
-                <h3>Aceite de Oliva</h3>
-                <p>Vidrio 500cc</p>
-                <p><strong>$14.600</strong></p>
-                <button onclick="agregarAlCarrito('Aceite de Oliva', 'Vidrio 500cc', '$14.600')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/aceite_1l.jpg'>
-                <h3>Aceite de Oliva</h3>
-                <p>1 Litro</p>
-                <p><strong>$22.900</strong></p>
-                <button onclick="agregarAlCarrito('Aceite de Oliva', '1 Litro', '$22.900')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/aceite_2l.jpg'>
-                <h3>Aceite de Oliva</h3>
-                <p>2 Litros</p>
-                <p><strong>$40.900</strong></p>
-                <button onclick="agregarAlCarrito('Aceite de Oliva', '2 Litros', '$40.900')">Agregar</button>
-            </div></div><h2>Aceitunas</h2><p class='desc-cat'>Nuestra Variedad Arauco es, por definici&oacute;n, el emblema de la olivicultura riojana.</p><img src='img/aceitunas.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
-                <img src='img/aceituna_verde_500.jpg'>
-                <h3>Aceituna Verde 00 (Arauco)</h3>
-                <p>500grs</p>
-                <p><strong>$8.900</strong></p>
-                <button onclick="agregarAlCarrito('Aceituna Verde 00 (Arauco)', '500grs', '$8.900')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/aceituna_verde_1kg.jpg'>
-                <h3>Aceituna Verde 00 (Arauco)</h3>
-                <p>1kg</p>
-                <p><strong>$16.900</strong></p>
-                <button onclick="agregarAlCarrito('Aceituna Verde 00 (Arauco)', '1kg', '$16.900')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/aceituna_negra_1kg.jpg'>
-                <h3>Aceituna Negra 00 (Arauco)</h3>
-                <p>1kg</p>
-                <p><strong>$21.000</strong></p>
-                <button onclick="agregarAlCarrito('Aceituna Negra 00 (Arauco)', '1kg', '$21.000')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/aceituna_mixta.jpg'>
-                <h3>Aceituna Rellena Mixta</h3>
-                <p>Frasco 330grs</p>
-                <p><strong>$7.900</strong></p>
-                <button onclick="agregarAlCarrito('Aceituna Rellena Mixta', 'Frasco 330grs', '$7.900')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/pasta_aceitunas.jpg'>
-                <h3>Pasta de aceitunas (V/N)</h3>
-                <p>Frasco 330grs</p>
-                <p><strong>$6.900</strong></p>
-                <button onclick="agregarAlCarrito('Pasta de aceitunas (V/N)', 'Frasco 330grs', '$6.900')">Agregar</button>
-            </div></div><h2>Frutos Secos</h2><p class='desc-cat'>Selecci&oacute;n de frutos secos de alta calidad, cosechados en el coraz&oacute;n de nuestra provincia.</p><img src='img/frutos_secos.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
-                <img src='img/pistacho_tostado_250.jpg'>
-                <h3>Pistacho tostado con cáscara</h3>
-                <p>1/4 kg</p>
-                <p><strong>$13.500</strong></p>
-                <button onclick="agregarAlCarrito('Pistacho tostado con cáscara', '1/4 kg', '$13.500')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/pistacho_tostado_500.jpg'>
-                <h3>Pistacho tostado con cáscara</h3>
-                <p>1/2 kg</p>
-                <p><strong>$22.500</strong></p>
-                <button onclick="agregarAlCarrito('Pistacho tostado con cáscara', '1/2 kg', '$22.500')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/pistacho_tostado_1kg.jpg'>
-                <h3>Pistacho tostado con cáscara</h3>
-                <p>1kg</p>
-                <p><strong>$40.500</strong></p>
-                <button onclick="agregarAlCarrito('Pistacho tostado con cáscara', '1kg', '$40.500')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/pistacho_pelado.jpg'>
-                <h3>Pistacho pelado natural</h3>
-                <p>1kg</p>
-                <p><strong>$68.000</strong></p>
-                <button onclick="agregarAlCarrito('Pistacho pelado natural', '1kg', '$68.000')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/nuez_mariposa_500.jpg'>
-                <h3>Nuez pelada mariposa (Chandler)</h3>
-                <p>1/2kg</p>
-                <p><strong>$14.000</strong></p>
-                <button onclick="agregarAlCarrito('Nuez pelada mariposa (Chandler)', '1/2kg', '$14.000')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/nuez_mariposa_1kg.jpg'>
-                <h3>Nuez pelada mariposa (Chandler)</h3>
-                <p>1kg</p>
-                <p><strong>$24.000</strong></p>
-                <button onclick="agregarAlCarrito('Nuez pelada mariposa (Chandler)', '1kg', '$24.000')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/ciruelas_500.jpg'>
-                <h3>Ciruelas pasas descarozadas</h3>
-                <p>1/2 kg</p>
-                <p><strong>$7.000</strong></p>
-                <button onclick="agregarAlCarrito('Ciruelas pasas descarozadas', '1/2 kg', '$7.000')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/ciruelas_1kg.jpg'>
-                <h3>Ciruelas pasas descarozadas</h3>
-                <p>1kg</p>
-                <p><strong>$12.000</strong></p>
-                <button onclick="agregarAlCarrito('Ciruelas pasas descarozadas', '1kg', '$12.000')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/pasas_500.jpg'>
-                <h3>Pasas de uva</h3>
-                <p>1/2kg</p>
-                <p><strong>$4.800</strong></p>
-                <button onclick="agregarAlCarrito('Pasas de uva', '1/2kg', '$4.800')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/pasas_1kg.jpg'>
-                <h3>Pasas de uva</h3>
-                <p>1kg</p>
-                <p><strong>$8.500</strong></p>
-                <button onclick="agregarAlCarrito('Pasas de uva', '1kg', '$8.500')">Agregar</button>
-            </div></div><h2>Dulces y Varios</h2><p class='desc-cat'>Sabores regionales artesanales que evocan los mejores recuerdos de nuestra cultura riojana.</p><img src='img/dulces.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
-                <img src='img/nueces_confitadas.jpg'>
-                <h3>Nueces confitadas</h3>
-                <p>Caja 10u</p>
-                <p><strong>$10.000</strong></p>
-                <button onclick="agregarAlCarrito('Nueces confitadas', 'Caja 10u', '$10.000')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/dulce_cayote.jpg'>
-                <h3>Dulce de cayote</h3>
-                <p>Frasco 330cc</p>
-                <p><strong>$7.700</strong></p>
-                <button onclick="agregarAlCarrito('Dulce de cayote', 'Frasco 330cc', '$7.700')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/dulce_membrillo_650.jpg'>
-                <h3>Dulce de membrillo (Pan)</h3>
-                <p>650grs</p>
-                <p><strong>$7.000</strong></p>
-                <button onclick="agregarAlCarrito('Dulce de membrillo (Pan)', '650grs', '$7.000')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/dulce_membrillo_270.jpg'>
-                <h3>Dulce de membrillo (Pan)</h3>
-                <p>270grs</p>
-                <p><strong>$3.500</strong></p>
-                <button onclick="agregarAlCarrito('Dulce de membrillo (Pan)', '270grs', '$3.500')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/tomates_100.jpg'>
-                <h3>Tomates disecados premium</h3>
-                <p>100grs</p>
-                <p><strong>$3.500</strong></p>
-                <button onclick="agregarAlCarrito('Tomates disecados premium', '100grs', '$3.500')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/tomates_1kg.jpg'>
-                <h3>Tomates disecados premium</h3>
-                <p>1kg</p>
-                <p><strong>$27.000</strong></p>
-                <button onclick="agregarAlCarrito('Tomates disecados premium', '1kg', '$27.000')">Agregar</button>
-            </div></div><h2>Vinos</h2><p class='desc-cat'>Bodegas de La Rioja. Vinos artesanales seleccionados.</p><img src='img/vinos.jpg' style='width:100%; max-width:800px; display:block; margin:auto; margin-bottom: 30px; border: 1px solid #C5A059;'><div class='grid'>            <div class="card">
-                <img src='img/tilimuqui_malbec.jpg'>
-                <h3>Tilimuqui Malbec Orgánico</h3>
-                <p>750cc</p>
-                <p><strong>$9.900</strong></p>
-                <button onclick="agregarAlCarrito('Tilimuqui Malbec Orgánico', '750cc', '$9.900')">Agregar</button>
-            </div>            <div class="card">
-                <img src='img/club_playa_blanco.jpg'>
-                <h3>Club de Playa Blanco dulce</h3>
-                <p>750cc</p>
-                <p><strong>$6.900</strong></p>
-                <button onclick="agregarAlCarrito('Club de Playa Blanco dulce', '750cc', '$6.900')">Agregar</button>
-            </div></div>    </div>
+
+    <div id="catalogo">
+        <p class="estado-carga">Cargando productos...</p>
+    </div>
+
     <footer>
-        <p>Realiza tu pedido con Jose v&iacute;a <a href='https://wa.me/5493804559043' target='_blank'>WhatsApp</a></p>
-        <p>Seguinos en Instagram: <a href='https://www.instagram.com/olivas_de_larioja' target='_blank'>@olivas_de_larioja</a></p>
+        <p>Realiz&aacute; tu pedido con Jose v&iacute;a <a href="https://wa.me/5493804559043" target="_blank">WhatsApp</a></p>
+        <p>Seguinos en Instagram: <a href="https://www.instagram.com/olivas_de_larioja" target="_blank">@olivas_de_larioja</a></p>
     </footer>
+
     <script>
+        const CLAVE_REVENDEDORES = 'revendedor26';
+        const DESCUENTO_REVENDEDOR = 15;
+        const AJUSTE_INFLACION = 0;
+        const REDONDEO = 100;
+
+        const DATOS_CATEGORIA = {
+            'Aceites': {
+                descripcion: 'La esencia de nuestra tierra. Aceites de oliva prensados con la tradición y el sol de La Rioja.',
+                imagen: 'img/aceites.jpg'
+            },
+            'Aceitunas': {
+                descripcion: 'Nuestra Variedad Arauco es, por definición, el emblema de la olivicultura riojana.',
+                imagen: 'img/aceitunas.jpg'
+            },
+            'Frutos Secos': {
+                descripcion: 'Selección de frutos secos de alta calidad, cosechados en el corazón de nuestra provincia.',
+                imagen: 'img/frutos_secos.jpg'
+            },
+            'Dulces y Varios': {
+                descripcion: 'Sabores regionales artesanales que evocan los mejores recuerdos de nuestra cultura riojana.',
+                imagen: 'img/dulces.jpg'
+            },
+            'Vinos': {
+                descripcion: 'Bodegas de La Rioja. Vinos artesanales seleccionados.',
+                imagen: 'img/vinos.jpg'
+            }
+        };
+
+        let productosCatalogo = [];
         let carrito = [];
         let contador = 0;
-        function agregarAlCarrito(prod, pres, precioTxt) {
-            let precioNum = parseInt(precioTxt.replace('$', '').replace(/\./g, ''));
-            carrito.push({id: contador++, nombre: prod + ' (' + pres + ')', precioTxt: precioTxt, precioNum: precioNum});
+        let modoRevendedor = false;
+
+        function escaparHtml(texto) {
+            return String(texto || '').replace(/[&<>"']/g, caracter => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            })[caracter]);
+        }
+
+        function parsearCsv(texto) {
+            const filas = [];
+            let fila = [];
+            let valor = '';
+            let entreComillas = false;
+
+            for (let i = 0; i < texto.length; i++) {
+                const caracter = texto[i];
+                const siguiente = texto[i + 1];
+
+                if (caracter === '"' && entreComillas && siguiente === '"') {
+                    valor += '"';
+                    i++;
+                } else if (caracter === '"') {
+                    entreComillas = !entreComillas;
+                } else if (caracter === ',' && !entreComillas) {
+                    fila.push(valor.trim());
+                    valor = '';
+                } else if ((caracter === '\n' || caracter === '\r') && !entreComillas) {
+                    if (caracter === '\r' && siguiente === '\n') i++;
+                    fila.push(valor.trim());
+                    if (fila.some(celda => celda !== '')) filas.push(fila);
+                    fila = [];
+                    valor = '';
+                } else {
+                    valor += caracter;
+                }
+            }
+
+            fila.push(valor.trim());
+            if (fila.some(celda => celda !== '')) filas.push(fila);
+            return filas;
+        }
+
+        function convertirCsvAProductos(textoCsv) {
+            const filas = parsearCsv(textoCsv);
+            const encabezados = filas.shift().map(titulo => titulo.trim());
+
+            return filas.map(fila => {
+                const producto = {};
+                encabezados.forEach((encabezado, indice) => {
+                    producto[encabezado] = fila[indice] || '';
+                });
+                return producto;
+            }).filter(producto => producto.Categoria && producto.Producto && producto.Precio);
+        }
+
+        function precioANumero(precioTxt) {
+            return parseInt(String(precioTxt).replace(/[^0-9]/g, ''), 10) || 0;
+        }
+
+        function formatearPrecio(valor) {
+            return '$' + valor.toLocaleString('es-AR');
+        }
+
+        function calcularPrecioRevendedor(precioBase) {
+            const conInflacion = precioBase * (1 + AJUSTE_INFLACION / 100);
+            const conDescuento = conInflacion * (1 - DESCUENTO_REVENDEDOR / 100);
+            return Math.round(conDescuento / REDONDEO) * REDONDEO;
+        }
+
+        function renderizarCatalogo(productos) {
+            productosCatalogo = productos.map(producto => {
+                const precioBase = precioANumero(producto.Precio);
+                const precioRevendedor = calcularPrecioRevendedor(precioBase);
+
+                return {
+                    categoria: producto.Categoria,
+                    producto: producto.Producto,
+                    presentacion: producto.Presentacion,
+                    precioOriginalTxt: formatearPrecio(precioBase),
+                    precioOriginalNum: precioBase,
+                    precioRevendedorTxt: formatearPrecio(precioRevendedor),
+                    precioRevendedorNum: precioRevendedor,
+                    imagen: producto.Imagen || 'img/placeholder.jpg'
+                };
+            });
+
+            const productosPorCategoria = productosCatalogo.reduce((grupos, item, indice) => {
+                if (!grupos[item.categoria]) grupos[item.categoria] = [];
+                grupos[item.categoria].push({ ...item, indice });
+                return grupos;
+            }, {});
+
+            const html = Object.entries(productosPorCategoria).map(([categoria, items]) => {
+                const datos = DATOS_CATEGORIA[categoria] || { descripcion: '', imagen: '' };
+                const encabezado = `
+                    <h2>${escaparHtml(categoria)}</h2>
+                    ${datos.descripcion ? `<p class="desc-cat">${escaparHtml(datos.descripcion)}</p>` : ''}
+                    ${datos.imagen ? `<img class="imagen-categoria" src="${escaparHtml(datos.imagen)}" alt="${escaparHtml(categoria)}">` : ''}
+                `;
+
+                const tarjetas = items.map(item => `
+                    <div class="card">
+                        <img src="${escaparHtml(item.imagen)}" alt="${escaparHtml(item.producto)}">
+                        <h3>${escaparHtml(item.producto)}</h3>
+                        <p>${escaparHtml(item.presentacion)}</p>
+                        <p>
+                            <strong class="precio-normal">${escaparHtml(item.precioOriginalTxt)}</strong>
+                            <span class="precio-anterior">${escaparHtml(item.precioOriginalTxt)}</span>
+                            <strong class="precio-revendedor">${escaparHtml(item.precioRevendedorTxt)}</strong>
+                        </p>
+                        <button type="button" data-agregar="${item.indice}">Agregar</button>
+                    </div>
+                `).join('');
+
+                return `${encabezado}<div class="grid">${tarjetas}</div>`;
+            }).join('');
+
+            document.getElementById('catalogo').innerHTML = html;
+        }
+
+        async function cargarCatalogo() {
+            document.getElementById('etiqueta-descuento').textContent = 'CATÁLOGO PARA REVENDEDORES · ' + DESCUENTO_REVENDEDOR + '% OFF';
+            document.getElementById('catalogo').innerHTML = '<p class="estado-carga">Cargando productos...</p>';
+
+            try {
+                if (window.location.protocol === 'file:') {
+                    throw new Error('archivo-directo');
+                }
+
+                const respuesta = await fetch('productos.csv?v=' + Date.now());
+                if (!respuesta.ok) throw new Error('No se pudo leer productos.csv');
+
+                const textoCsv = await respuesta.text();
+                const productos = convertirCsvAProductos(textoCsv);
+
+                if (!productos.length) throw new Error('productos.csv no tiene productos válidos');
+                renderizarCatalogo(productos);
+            } catch (error) {
+                const ayudaArchivoLocal = window.location.protocol === 'file:'
+                    ? '<strong>Lo abriste con doble clic como archivo.</strong><br><br>Para que cargue productos.csv, cerrá esta pestaña y abrí <strong>ABRIR_CATALOGO.bat</strong> dentro de la carpeta descomprimida.'
+                    : 'No se pudieron cargar los productos. Revisá que productos.csv esté subido y tenga las columnas Categoria, Producto, Presentacion, Precio e Imagen.';
+                document.getElementById('catalogo').innerHTML = '<p class="estado-carga">' + ayudaArchivoLocal + '</p>';
+                console.error(error);
+            }
+        }
+
+        function mostrarAcceso() {
+            document.getElementById('acceso').classList.add('visible');
+            document.getElementById('acceso').setAttribute('aria-hidden', 'false');
+            document.getElementById('clave').focus();
+        }
+
+        function ocultarAcceso() {
+            document.getElementById('acceso').classList.remove('visible');
+            document.getElementById('acceso').setAttribute('aria-hidden', 'true');
+            document.getElementById('clave').value = '';
+            document.getElementById('error-clave').textContent = '';
+        }
+
+        function activarRevendedor() {
+            modoRevendedor = true;
+            sessionStorage.setItem('modoRevendedor', 'ok');
+            document.body.classList.add('modo-revendedor');
+            document.getElementById('titulo-carrito').textContent = 'Pedido revendedor';
+            carrito = [];
+            actualizar();
+            ocultarAcceso();
+        }
+
+        function salirRevendedor() {
+            modoRevendedor = false;
+            sessionStorage.removeItem('modoRevendedor');
+            document.body.classList.remove('modo-revendedor');
+            document.getElementById('titulo-carrito').textContent = 'Mi Pedido';
+            carrito = [];
             actualizar();
         }
+
+        function validarClave(event) {
+            event.preventDefault();
+            if (document.getElementById('clave').value === CLAVE_REVENDEDORES) {
+                activarRevendedor();
+            } else {
+                document.getElementById('error-clave').textContent = 'Contraseña incorrecta.';
+                document.getElementById('clave').select();
+            }
+        }
+
+        function agregarAlCarrito(prod, pres, precioTxt) {
+            const precioNum = precioANumero(precioTxt);
+            carrito.push({ id: contador++, nombre: prod + ' (' + pres + ')', precioTxt: precioTxt, precioNum: precioNum });
+            actualizar();
+        }
+
+        document.getElementById('catalogo').addEventListener('click', event => {
+            const boton = event.target.closest('[data-agregar]');
+            if (!boton) return;
+
+            const producto = productosCatalogo[Number(boton.dataset.agregar)];
+            if (!producto) return;
+
+            const precio = modoRevendedor ? producto.precioRevendedorTxt : producto.precioOriginalTxt;
+            agregarAlCarrito(producto.producto, producto.presentacion, precio);
+        });
+
         function eliminar(id) {
             carrito = carrito.filter(i => i.id !== id);
             actualizar();
         }
+
         function actualizar() {
-            let lista = document.getElementById('lista-carrito');
+            const lista = document.getElementById('lista-carrito');
             lista.innerHTML = '';
             let total = 0;
+
             carrito.forEach(item => {
                 total += item.precioNum;
-                lista.innerHTML += '<li><span class="nombre-item">' + item.nombre + ' - ' + item.precioTxt +
+                lista.innerHTML += '<li><span class="nombre-item">' + escaparHtml(item.nombre) + ' - ' + escaparHtml(item.precioTxt) +
                 '</span><button class="btn-eliminar" title="Quitar producto" aria-label="Quitar producto" onclick="eliminar(' + item.id + ')">&#128465;</button></li>';
             });
+
             document.getElementById('total-carrito').innerText = 'Total: $' + total.toLocaleString('es-AR');
         }
+
         function enviarWhatsApp() {
-            let msg = "Hola Jose, quiero hacer el siguiente pedido:%0A%0A" +
-                      carrito.map(i => "- " + i.nombre).join("%0A") +
-                      "%0A%0A*TOTAL: $" + document.getElementById('total-carrito').innerText.split('$')[1] + "*";
+            const tipoPedido = modoRevendedor ? 'PEDIDO DE REVENDEDOR (' + DESCUENTO_REVENDEDOR + '% OFF)' : 'PEDIDO';
+            const detalle = carrito.map(i => '- ' + i.nombre + ' - ' + i.precioTxt).join('%0A');
+            const total = document.getElementById('total-carrito').innerText.split('$')[1] || '0';
+            const msg = 'Hola Jose, quiero hacer un ' + tipoPedido + ':%0A%0A' + detalle + '%0A%0A*TOTAL: $' + total + '*';
             window.open('https://wa.me/5493804559043?text=' + msg, '_blank');
         }
+
+        if (sessionStorage.getItem('modoRevendedor') === 'ok') {
+            modoRevendedor = true;
+            document.body.classList.add('modo-revendedor');
+            document.getElementById('titulo-carrito').textContent = 'Pedido revendedor';
+        }
+
+        cargarCatalogo();
+        actualizar();
     </script>
 </body>
 </html>

@@ -1,3 +1,20 @@
+$mensaje = @"
+ATENCION:
+
+Este generador quedó desactivado porque el catálogo nuevo ya lee productos.csv directamente desde index.html.
+
+Si ejecutás el generador viejo, puede pisar el index.html nuevo y borrar:
+- acceso revendedores
+- variantes desplegables
+- selector de cantidad
+- lectura dinámica del CSV
+
+Para actualizar precios o variantes, editá productos.csv y recargá el sitio.
+"@
+
+Write-Host $mensaje -ForegroundColor Yellow
+exit
+
 $configCategorias = @{
     "Aceites" = @{ desc = "La esencia de nuestra tierra. Aceites de oliva prensados con la tradici&oacute;n y el sol de La Rioja."; img = "img/aceites.jpg" }
     "Aceitunas" = @{ desc = "Nuestra Variedad Arauco es, por definici&oacute;n, el emblema de la olivicultura riojana."; img = "img/aceitunas.jpg" }

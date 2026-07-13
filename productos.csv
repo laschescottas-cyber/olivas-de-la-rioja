@@ -1,8 +1,12 @@
-Categoria,Producto,Presentacion,Precio,Imagen
+Categoria,Producto,Presentacion,Precio,Imagen,Grupo
 Aceites,Aceite de Oliva,PET 500cc,$13.500,img/aceite_pet.jpg
 Aceites,Aceite de Oliva,Vidrio 500cc,$14.600,img/aceite_vidrio.jpg
 Aceites,Aceite de Oliva,1 Litro,$22.900,img/aceite_1l.jpg
 Aceites,Aceite de Oliva,2 Litros,$40.900,img/aceite_2l.jpg
+Aceites,Aceite oliva virgen extra premium Gran Lautaro Artesanal,1/4 Lt,$8.800,img/aceiteslautaro.jpg,Aceite oliva virgen extra premium Gran Lautaro Artesanal
+Aceites,Aceite oliva virgen extra premium Gran Lautaro Artesanal,1/2 Lt,$16.000,img/aceiteslautaro.jpg,Aceite oliva virgen extra premium Gran Lautaro Artesanal
+Aceites,Aceite oliva virgen extra premium Gran Lautaro Artesanal,1 Lt,$24.000,img/aceiteslautaro.jpg,Aceite oliva virgen extra premium Gran Lautaro Artesanal
+Aceites,Aceite oliva virgen extra premium Gran Lautaro Artesanal,2 Lt,$35.000,img/aceiteslautaro.jpg,Aceite oliva virgen extra premium Gran Lautaro Artesanal
 Aceitunas,Aceituna Verde 00 (Arauco),500grs,$8.900,img/aceituna_verde_500.jpg
 Aceitunas,Aceituna Verde 00 (Arauco),1kg,$16.900,img/aceituna_verde_1kg.jpg
 Aceitunas,Aceituna Negra 00 (Arauco),1kg,$21.000,img/aceituna_negra_1kg.jpg

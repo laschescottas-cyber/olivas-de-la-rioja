@@ -1,0 +1,65 @@
+name: Restaurar insignia NUEVO
+
+on:
+  push:
+    paths:
+      - '.github/workflows/restaurar-insignia-nuevo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  restaurar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restaurar insignia en catálogo
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          css_old = ".card { border: 1px solid var(--oro); background: var(--fondo-card); padding: 20px; text-align: center; border-radius: 4px; transition: 0.3s; }"
+          css_new = ".card { position: relative; border: 1px solid var(--oro); background: var(--fondo-card); padding: 20px; text-align: center; border-radius: 4px; transition: 0.3s; }\n        .badge-nuevo { position: absolute; top: 30px; right: 30px; z-index: 3; display: inline-flex; align-items: center; justify-content: center; padding: 7px 13px; border-radius: 999px; background: var(--verde); color: #F5F5DC; border: 2px solid var(--oro); font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 800; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(0,0,0,.45); }"
+          if '.badge-nuevo {' not in s:
+              s = s.replace(css_old, css_new)
+
+          old = "imagen: producto.Imagen || 'img/placeholder.jpg'\n                };"
+          new = "imagen: producto.Imagen || 'img/placeholder.jpg',\n                    nuevo: String(producto.Nuevo || '').trim().toUpperCase() === 'SI'\n                };"
+          if 'nuevo: String(producto.Nuevo' not in s:
+              s = s.replace(old, new)
+
+          old = "imagen: item.imagen,\n                        variantes: []"
+          new = "imagen: item.imagen,\n                        nuevo: item.nuevo,\n                        variantes: []"
+          if 'nuevo: item.nuevo' not in s:
+              s = s.replace(old, new)
+
+          old = "if (!grupo.imagen || grupo.imagen === 'img/placeholder.jpg') grupo.imagen = item.imagen;\n                grupo.variantes.push(item);"
+          new = "if (!grupo.imagen || grupo.imagen === 'img/placeholder.jpg') grupo.imagen = item.imagen;\n                if (item.nuevo) grupo.nuevo = true;\n                grupo.variantes.push(item);"
+          if 'if (item.nuevo) grupo.nuevo = true;' not in s:
+              s = s.replace(old, new)
+
+          old = "<div class=\"card\">\n                        <img src=\"${escaparHtml(item.imagen)}\" alt=\"${escaparHtml(item.producto)}\">"
+          new = "<div class=\"card\">\n                        ${item.nuevo ? '<span class=\"badge-nuevo\">NUEVO</span>' : ''}\n                        <img src=\"${escaparHtml(item.imagen)}\" alt=\"${escaparHtml(item.producto)}\">"
+          if 'badge-nuevo\">NUEVO' not in s:
+              s = s.replace(old, new)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No hay cambios para guardar"
+          else
+            git commit -m "Restaurar insignia NUEVO en tarjetas"
+            git push
+          fi

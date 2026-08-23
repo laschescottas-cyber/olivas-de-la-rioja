@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Restaurar insignia en catálogo
+      - name: Restaurar insignia y alinear tarjetas
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -24,6 +24,7 @@ jobs:
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
 
+          # Mantener la insignia NUEVO
           css_old = ".card { border: 1px solid var(--oro); background: var(--fondo-card); padding: 20px; text-align: center; border-radius: 4px; transition: 0.3s; }"
           css_new = ".card { position: relative; border: 1px solid var(--oro); background: var(--fondo-card); padding: 20px; text-align: center; border-radius: 4px; transition: 0.3s; }\n        .badge-nuevo { position: absolute; top: 30px; right: 30px; z-index: 3; display: inline-flex; align-items: center; justify-content: center; padding: 7px 13px; border-radius: 999px; background: var(--verde); color: #F5F5DC; border: 2px solid var(--oro); font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 800; letter-spacing: 1px; box-shadow: 0 4px 12px rgba(0,0,0,.45); }"
           if '.badge-nuevo {' not in s:
@@ -49,6 +50,23 @@ jobs:
           if 'badge-nuevo\">NUEVO' not in s:
               s = s.replace(old, new)
 
+          # Alinear todas las tarjetas de una misma fila
+          s = s.replace(
+              ".grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: auto; }",
+              ".grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: auto; align-items: stretch; }"
+          )
+
+          s = s.replace(
+              ".card { position: relative; border: 1px solid var(--oro); background: var(--fondo-card); padding: 20px; text-align: center; border-radius: 4px; transition: 0.3s; }",
+              ".card { position: relative; height: 100%; display: flex; flex-direction: column; border: 1px solid var(--oro); background: var(--fondo-card); padding: 20px; text-align: center; border-radius: 4px; transition: 0.3s; }"
+          )
+
+          if '.card h3 { min-height: 56px;' not in s:
+              anchor = ".card img { width: 100%; height: 280px; object-fit: contain; background: #111; border: 1px solid var(--oro); margin-bottom: 20px; }"
+              extra = anchor + "\n        .card h3 { min-height: 56px; margin: 0 0 8px; display: flex; align-items: center; justify-content: center; }\n        .campo-producto { min-height: 84px; text-align: left; margin: 12px 0; font-family: Arial, sans-serif; color: #F5F5DC; }\n        .card > h3 + p { min-height: 84px; margin: 12px 0; display: flex; align-items: center; justify-content: center; }\n        .card > button[data-agregar] { margin-top: auto; }"
+              s = s.replace(anchor, extra)
+              s = s.replace("        .campo-producto { text-align: left; margin: 12px 0; font-family: Arial, sans-serif; color: #F5F5DC; }\n", "")
+
           p.write_text(s, encoding='utf-8')
           PY
 
@@ -60,6 +78,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No hay cambios para guardar"
           else
-            git commit -m "Restaurar insignia NUEVO en tarjetas"
+            git commit -m "Alinear tarjetas del catálogo"
             git push
           fi

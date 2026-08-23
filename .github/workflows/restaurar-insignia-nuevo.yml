@@ -50,7 +50,7 @@ jobs:
           if 'badge-nuevo\">NUEVO' not in s:
               s = s.replace(old, new)
 
-          # Alinear todas las tarjetas de una misma fila
+          # Alinear tarjetas en PC y tablet
           s = s.replace(
               ".grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: auto; }",
               ".grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 40px; max-width: 1200px; margin: auto; align-items: stretch; }"
@@ -67,6 +67,12 @@ jobs:
               s = s.replace(anchor, extra)
               s = s.replace("        .campo-producto { text-align: left; margin: 12px 0; font-family: Arial, sans-serif; color: #F5F5DC; }\n", "")
 
+          # En celular volver a tarjetas compactas, sin espacios forzados
+          mobile_anchor = "            .grid { grid-template-columns: 1fr; padding: 25px 16px; gap: 25px; }"
+          mobile_extra = mobile_anchor + "\n            .card { height: auto; display: block; }\n            .card h3 { min-height: 0; margin: 0 0 8px; display: block; }\n            .campo-producto { min-height: 0; }\n            .card > h3 + p { min-height: 0; margin: 12px 0; display: block; }\n            .card > button[data-agregar] { margin-top: 10px; }"
+          if ".card { height: auto; display: block; }" not in s:
+              s = s.replace(mobile_anchor, mobile_extra)
+
           p.write_text(s, encoding='utf-8')
           PY
 
@@ -78,6 +84,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No hay cambios para guardar"
           else
-            git commit -m "Alinear tarjetas del catálogo"
+            git commit -m "Alinear tarjetas en PC y tablet; compactar celular"
             git push
           fi

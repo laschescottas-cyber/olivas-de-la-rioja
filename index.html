@@ -78,6 +78,16 @@
         .categoria-titulo .desc-cat { margin: 9px auto 0; color: #F5F5DC; text-shadow: none; }
         .categoria-banner { width: 100%; height: clamp(260px, 28vw, 360px); background: #111; overflow: hidden; }
         .categoria-banner img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; margin: 0 auto; }
+        /* Galería de novedades: cuatro fotografías reales del catálogo, sin textos superpuestos. */
+        .categoria-banner.aceitunas-renovadas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); position: relative; background: #10150e; }
+        .aceitunas-renovadas .foto-nueva { min-width: 0; overflow: hidden; position: relative; }
+        .aceitunas-renovadas .foto-nueva + .foto-nueva { border-left: 1px solid rgba(197,160,89,.18); }
+        .aceitunas-renovadas .foto-nueva img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+        .aceitunas-renovadas::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(10,15,8,.08), transparent 20%, transparent 80%, rgba(10,10,8,.22)); }
+        @media (max-width: 600px) {
+            .categoria-banner.aceitunas-renovadas { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); height: 340px; }
+            .aceitunas-renovadas .foto-nueva:nth-child(3) { border-left: 0; }
+        }
         footer { padding: 40px; text-align: center; border-top: 1px solid #444; background: #111; color: #ccc; }
         footer a { color: var(--oro); text-decoration: none; font-weight: bold; }
 
@@ -172,7 +182,7 @@
                 imagen: 'img/aceites.jpg'
             },
             'Aceitunas': {
-                descripcion: 'Nuestra Variedad Arauco es, por definición, el emblema de la olivicultura riojana.',
+                descripcion: 'Tradición riojana: variedad Arauco y nuevas presentaciones Roldán Moreno.',
                 imagen: 'img/aceitunas.jpg'
             },
             'Frutos Secos': {
@@ -325,9 +335,16 @@
                             <h2>${escaparHtml(categoria)}</h2>
                             ${datos.descripcion ? `<p class="desc-cat">${escaparHtml(datos.descripcion)}</p>` : ''}
                         </div>
+                        ${categoria === 'Aceitunas' ? `
+                        <div class="categoria-banner aceitunas-renovadas" aria-label="Nuevas presentaciones de aceitunas Roldán Moreno">
+                            <div class="foto-nueva"><img src="img/aceitunas_roldan_verdes_vidrio_220.jpg" alt="Roldán Moreno aceitunas verdes, vidrio 220 g" loading="lazy"></div>
+                            <div class="foto-nueva"><img src="img/aceitunas_roldan_verdes_pet_500.jpg" alt="Roldán Moreno aceitunas verdes, PET 500 g" loading="lazy"></div>
+                            <div class="foto-nueva"><img src="img/aceitunas_roldan_verdes_vidrio_500.jpg" alt="Roldán Moreno aceitunas verdes, vidrio 500 g" loading="lazy"></div>
+                            <div class="foto-nueva"><img src="img/aceitunas_roldan_negras_vidrio_500.jpg" alt="Roldán Moreno aceitunas negras, vidrio 500 g" loading="lazy"></div>
+                        </div>` : `
                         <div class="categoria-banner">
                             <img src="${escaparHtml(datos.imagen || 'img/banner.jpg')}" alt="${escaparHtml(categoria)}">
-                        </div>
+                        </div>`}
                     </section>
                 `;
 

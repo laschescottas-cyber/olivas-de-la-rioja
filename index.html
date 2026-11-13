@@ -78,6 +78,13 @@
         .categoria-titulo .desc-cat { margin: 9px auto 0; color: #F5F5DC; text-shadow: none; }
         .categoria-banner { width: 100%; height: clamp(260px, 28vw, 360px); background: #111; overflow: hidden; }
         .categoria-banner img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; margin: 0 auto; }
+        /* Banner panorámico: mantiene la galería anterior como respaldo hasta que se publique el JPG. */
+        .categoria-banner.aceitunas-renovadas { position: relative; }
+        .aceitunas-renovadas .banner-unico { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 2; }
+        .aceitunas-renovadas .banner-unico:not(.imagen-lista) { display: none; }
+        @media (max-width: 600px) {
+            .aceitunas-renovadas .banner-unico { object-position: center; }
+        }
         /* Galería de novedades: cuatro fotografías reales del catálogo, sin textos superpuestos. */
         .categoria-banner.aceitunas-renovadas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); position: relative; background: #10150e; }
         .aceitunas-renovadas .foto-nueva { min-width: 0; overflow: hidden; position: relative; }
@@ -337,6 +344,7 @@
                         </div>
                         ${categoria === 'Aceitunas' ? `
                         <div class="categoria-banner aceitunas-renovadas" aria-label="Nuevas presentaciones de aceitunas Roldán Moreno">
+                            <img class="banner-unico" src="img/banner_aceitunas_sin_titulo.jpg" alt="Selección de aceitunas Roldán Moreno y variedades tradicionales" loading="lazy" onload="this.classList.add('imagen-lista')" onerror="this.remove()">
                             <div class="foto-nueva"><img src="img/aceitunas_roldan_verdes_vidrio_220.jpg" alt="Roldán Moreno aceitunas verdes, vidrio 220 g" loading="lazy"></div>
                             <div class="foto-nueva"><img src="img/aceitunas_roldan_verdes_pet_500.jpg" alt="Roldán Moreno aceitunas verdes, PET 500 g" loading="lazy"></div>
                             <div class="foto-nueva"><img src="img/aceitunas_roldan_verdes_vidrio_500.jpg" alt="Roldán Moreno aceitunas verdes, vidrio 500 g" loading="lazy"></div>

@@ -78,7 +78,8 @@
         .categoria-titulo .desc-cat { margin: 9px auto 0; color: #F5F5DC; text-shadow: none; }
         .categoria-banner { width: 100%; height: clamp(260px, 28vw, 360px); background: #111; overflow: hidden; }
         .categoria-banner img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; margin: 0 auto; }
-        .categoria-banner.aceites-premium { background-image: url("img/banner_aceites_premium_sin_titulo.jpg?v=20261113"), url("img/aceites.jpg"); background-size: cover; background-position: center; }
+        .categoria-banner.aceites-premium { width: 100%; height: auto; aspect-ratio: 1975 / 662; max-height: none; background-color: #10150e; background-image: url("img/banner_aceites_premium_sin_titulo.jpg?v=20261113"), url("img/aceites.jpg"); background-size: cover; background-position: center; }
+        @media (max-width: 600px) { .categoria-banner.aceites-premium { height: 260px; aspect-ratio: auto; } }
         /* Único banner de aceitunas: imagen completa, sin galería ni títulos superpuestos. */
         .categoria-banner.aceitunas-renovadas {
             display: block;

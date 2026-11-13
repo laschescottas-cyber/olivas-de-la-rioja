@@ -78,6 +78,7 @@
         .categoria-titulo .desc-cat { margin: 9px auto 0; color: #F5F5DC; text-shadow: none; }
         .categoria-banner { width: 100%; height: clamp(260px, 28vw, 360px); background: #111; overflow: hidden; }
         .categoria-banner img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; margin: 0 auto; }
+        .categoria-banner.aceites-premium { background-image: url("img/banner_aceites_premium_sin_titulo.jpg?v=20261113"), url("img/aceites.jpg"); background-size: cover; background-position: center; }
         /* Único banner de aceitunas: imagen completa, sin galería ni títulos superpuestos. */
         .categoria-banner.aceitunas-renovadas {
             display: block;
@@ -341,7 +342,7 @@
                             <h2>${escaparHtml(categoria)}</h2>
                             ${datos.descripcion ? `<p class="desc-cat">${escaparHtml(datos.descripcion)}</p>` : ''}
                         </div>
-                        ${categoria === 'Aceitunas' ? `
+                        ${categoria === 'Aceites' ? `<div class="categoria-banner aceites-premium" role="img" aria-label="Selección de aceites de oliva de La Rioja"></div>` : categoria === 'Aceitunas' ? `
                         <div class="categoria-banner aceitunas-renovadas">
                             <img src="img/banner_aceitunas_sin_titulo.jpg?v=20261113b" alt="Variedades de aceitunas Roldán Moreno y línea tradicional" loading="eager">
                         </div>` : `

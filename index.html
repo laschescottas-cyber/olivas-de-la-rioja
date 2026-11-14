@@ -115,6 +115,17 @@
         body.modo-revendedor .precio-revendedor { display: inline; }
         body.modo-revendedor .precio-normal { display: none; }
         .estado-carga { text-align: center; color: #F5F5DC; padding: 45px 20px; font-family: Arial, sans-serif; }
+        .buscador-productos { max-width: 850px; margin: 35px auto 5px; padding: 22px 24px 16px; background: #20231e; border: 1px solid rgba(197,160,89,.65); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,.3); font-family: Arial, sans-serif; }
+        .buscador-productos label { display: block; color: var(--oro); font-size: 1.06rem; font-weight: bold; margin-bottom: 12px; }
+        #buscador-catalogo { width: 100%; border: 1px solid var(--oro); background: #111; color: #fff; border-radius: 8px; padding: 15px 17px; font: inherit; font-size: 1rem; }
+        #buscador-catalogo::placeholder { color: #b5b5b5; }
+        #buscador-catalogo:focus { outline: 2px solid rgba(197,160,89,.6); outline-offset: 2px; }
+        #limpiar-buscador { width: auto; border: 1px solid var(--oro); border-radius: 7px; padding: 8px 14px; margin-top: 10px; font-size: .85rem; }
+        #limpiar-buscador[hidden] { display: none; }
+        #estado-buscador { color: #c9c8bc; min-height: 18px; margin: 10px 0 0; font-size: .85rem; }
+        .sin-resultados { text-align: center; padding: 50px 20px; font-family: Arial, sans-serif; }
+        @media (max-width: 700px) { .buscador-productos { margin: 22px 16px 5px; padding: 18px 16px 12px; } }
+
 
         @media (max-width: 700px) {
             header { padding-top: 130px; }

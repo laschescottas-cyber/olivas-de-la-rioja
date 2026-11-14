@@ -226,6 +226,7 @@
             }
         };
 
+        let productosOriginales = [];
         let productosCatalogo = [];
         let carrito = [];
         let contador = 0;
@@ -302,7 +303,30 @@
             return Math.round(conDescuento / REDONDEO) * REDONDEO;
         }
 
+        function normalizarBusqueda(texto) {
+            return String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        }
+
+        function buscarProductos() {
+            const valor = document.getElementById('buscador-catalogo').value.trim();
+            const terminos = normalizarBusqueda(valor).split(/\s+/).filter(Boolean);
+            const encontrados = productosOriginales.filter(p => {
+                const texto = normalizarBusqueda([p.Categoria, p.Producto, p.Presentacion, p.Grupo].join(' '));
+                return terminos.every(t => texto.includes(t));
+            });
+            document.getElementById('limpiar-buscador').hidden = !valor;
+            document.getElementById('estado-buscador').textContent = valor
+                ? encontrados.length + (encontrados.length === 1 ? ' presentación encontrada' : ' presentaciones encontradas')
+                : '';
+            renderizarCatalogo(encontrados);
+        }
+
         function renderizarCatalogo(productos) {
+            if (!productos.length) {
+                productosCatalogo = [];
+                document.getElementById('catalogo').innerHTML = '<div class="sin-resultados">No encontramos productos. Probá con otra palabra.</div>';
+                return;
+            }
             const filas = productos.map(producto => {
                 const precioBase = precioANumero(producto.Precio);
                 const precioRevendedor = calcularPrecioRevendedor(precioBase);
@@ -475,7 +499,8 @@
                 const productos = convertirCsvAProductos(textoCsv);
 
                 if (!productos.length) throw new Error('productos.csv no tiene productos válidos');
-                renderizarCatalogo(productos);
+                productosOriginales = productos;
+                buscarProductos();
             } catch (error) {
                 const ayudaArchivoLocal = window.location.protocol === 'file:'
                     ? '<strong>Lo abriste con doble clic como archivo.</strong><br><br>Para que cargue productos.csv, cerrá esta pestaña y abrí <strong>ABRIR_CATALOGO.bat</strong> dentro de la carpeta descomprimida.'
@@ -542,6 +567,14 @@
 
             actualizar();
         }
+
+        document.getElementById('buscador-catalogo').addEventListener('input', buscarProductos);
+        document.getElementById('limpiar-buscador').addEventListener('click', () => {
+            const campo = document.getElementById('buscador-catalogo');
+            campo.value = '';
+            buscarProductos();
+            campo.focus();
+        });
 
         document.getElementById('catalogo').addEventListener('click', event => {
             const sumar = event.target.closest('[data-sumar]');

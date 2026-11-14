@@ -170,6 +170,12 @@
         <button onclick="enviarWhatsApp()">FINALIZAR PEDIDO</button>
     </div>
 
+    <div class="buscador-productos" role="search">
+        <label for="buscador-catalogo">Buscar productos</label>
+        <input id="buscador-catalogo" type="search" placeholder="Aceitunas, aceites, alfajores, 500 g..." autocomplete="off">
+        <button id="limpiar-buscador" type="button" hidden>Limpiar búsqueda</button>
+        <p id="estado-buscador" aria-live="polite"></p>
+    </div>
     <div id="catalogo">
         <p class="estado-carga">Cargando productos...</p>
     </div>
